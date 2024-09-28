@@ -16,8 +16,15 @@ import time
 from pywebio.platform.flask import webio_view
 from pywebio import STATIC_PATH
 from flask import Flask, send_from_directory
+from flask_cors import CORS
+from pywebio import start_server
+from flask import Flask, render_template
 
 app = Flask(__name__)
+CORS(app)
+# Root route ("/")
+
+
 
 
 df = pd.read_csv('travel_destinations.csv')
@@ -143,12 +150,12 @@ def explore():
         put_image(img, width='100%')
         #temp = description[i].replace('-', ' ')
         #put_text("     %s" % temp)
-    put_markdown("# *In case of copyright issues, please drop an email to `mayanknarwal0506@gmail.com`*")
-    img = open('DestinationPics/India_1.jpg', 'rb').read()
+    put_markdown("# *In case of copyright issues, please drop an email to `ayushiagg2000@gmail.com`*")
+    img = open(r'C:Users/ayush/OneDrive/Desktop/Travel Desti Recommendation System/DestinationPics/India_1.jpg', 'rb').read()
     put_image(img, width='1500px')
 
 def choices():
-    img = open('DestinationPics/DesiSafar Logo.jpg', 'rb').read()
+    img = open(r'C:/Users/ayush/OneDrive/Desktop/Travel Desti Recommendation System/DestinationPics/DesiSafar Logo.jpg', 'rb').read()
     put_image(img, width='900px')
     put_markdown('# **Travel Destination Recommendation System**')
     answer = radio("Choose one", options=['Explore Incredible India!', 'Get Travel Recommendations'])
@@ -156,8 +163,9 @@ def choices():
         explore()
     if(answer == 'Get Travel Recommendations'):
         put_text('\nLet\'s get started! ')
+        # add recommendation system 
         select_recommendation_system()
 
-app.add_url_rule('/ayushi', 'webio_view', webio_view(choices), methods=['GET', 'POST', 'OPTIONS'])
-app.run(host='localhost', port=80)
+if __name__ == '__main__':
+    start_server(choices, port=5020)
 #app.run()
